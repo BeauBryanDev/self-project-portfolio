@@ -11,10 +11,16 @@ $route =  $routes[$requestURI] ??  null ;
 //var_dump($requestURI, $route);
 
 if ($route === null) {
+
     http_response_code(404);
     echo "404 Not Found";
     exit;
+
 } else {
+    /*
+    $controller = $route['controller'];
+    $action = $route['action'];
+    */
     require __DIR__ . "/../$route";
     //exit("404 Not Found!");
 
