@@ -17,15 +17,18 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-16">
 
         <?php foreach ( $posts as $post ): ?>
-
+ 
             <article>
                 <h3 class="text-lg font-semibold text-gray-900 hover:text-gray-600">
-                    <a href=" <?= $post['url'] ?>" target="_blank" rel="noopener noreferrer">
+                    <a href="/post?id=<?= $post['pid'] ?>" target="_blank" rel="noopener noreferrer">
                         <?= $post['title'] ?>
                     </a>
                 </h3>
 
-                <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="mt-2 text-sm text-gray-600"><?= $post['content'] ?></p>
+                <div class="container">
+                    <h5 class="text-sm  text-gray-900"><?= $post['description'] ?></h5>
+                    <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="mt-2 text-sm text-gray-600"><?= $post['content'] ?></p>
+                </div>
             </article>
 
         <?php endforeach; ?>

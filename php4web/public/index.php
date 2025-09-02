@@ -5,10 +5,10 @@ require __DIR__  . '/../frmwrk/db.php';
 $routes =  require __DIR__ . '/../routes/web.php';
 $db = new db();
 
-$requestURI = $_SERVER['REQUEST_URI'];
+$requestURI = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $route =  $routes[$requestURI] ??  null ;
-
+//var_dump($requestURI, $route);
 
 if ($route === null) {
     http_response_code(404);

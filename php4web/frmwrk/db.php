@@ -2,6 +2,7 @@
 
 class db {
     private $pdoConnection;
+    private $stmt;
 
     public function __construct() {
         $dns = "localhost";
@@ -15,9 +16,28 @@ class db {
     }
 
     public function query($sql, $params = []) {
-        $stmt = $this->pdoConnection->prepare($sql);
-        $stmt->execute($params);
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!is_array($params)) {
+            $params = [];
+        }
+
+        $this->stmt = $this->pdoConnection->prepare($sql);
+        $this->stmt->execute($params);
+
+        return $this;
+    }
+
+    public function get() {
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function firstOrFail() {
+        $result = $this->stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$result) {
+            http_response_code(404);
+            echo "404 Not Found";
+            exit;
+        }
+        return $result;
     }
 }
