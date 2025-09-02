@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <header>
+    <header class="mb-8">
         <?php include __DIR__ . '/navMenu.php'; ?>
     </header>
     <div class="container  p-4 text-white">
