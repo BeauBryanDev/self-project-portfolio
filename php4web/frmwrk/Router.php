@@ -4,20 +4,41 @@ class Router {
 
     protected $routes = [];
 
-    public function __construct()
-    {
+    public function __construct()   {
+
         $this->loadRoutes('web');
+
     }
 
 
-    public function get( string $uri, array $action )  
-    {
+    public function get( string $uri, array $action )   {
+
         $this->routes['GET'][$uri] = $action;
+
     }
 
-    public function post( string $uri, array $action )  
-    {
+    public function post( string $uri, array $action )   {
+
         $this->routes['POST'][$uri] = $action;
+
+    }
+
+    public function delete( string $uri, array $action )   {
+
+        $this->routes['DELETE'][$uri] = $action;
+
+    }
+
+    public function put( string $uri, array $action )   {
+
+        $this->routes['PUT'][$uri] = $action;
+
+    }
+
+    public function patch( string $uri, array $action )   {
+
+        $this->routes['PATCH'][$uri] = $action;
+
     }
 
     public function run() {
@@ -26,7 +47,8 @@ class Router {
    
         $route =  $this->routes[$requestURI] ??  null ;
 
-        $method =  $_SERVER['REQUEST_METHOD']; //FOR GET and POST
+        $method =  $_POST['_method'] ?? $_SERVER['REQUEST_METHOD']; //FIT WORKS FOR GET, POST, PUT  AND DELETE SINCE NOW ON.
+
 
         $action = $this->routes[$method][$requestURI] ?? null;
 

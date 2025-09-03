@@ -29,6 +29,19 @@
                     <h5 class="text-sm  text-gray-900"><?= $post['description'] ?></h5>
                     <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="mt-2 text-sm text-gray-600"><?= $post['content'] ?></p>
                 </div>
+                <div>
+                <form action="/home/delete" method="POST" onsubmit="return confirm('Are You Sure you want to delete this posts?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="id" value="<?= $post['pid'] ?>">
+
+                    <button type="submit" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-800 cursor-pointer">
+                        Delete 
+                    </button>
+                    <a href="/home/edit?id=<?= $post['pid'] ?>" class="text-xs font-semibold text-gray-900 hover:text-gray-600">
+                        Edit &rarr;
+                    </a>
+                </form>
+            </div>
             </article>
 
         <?php endforeach; ?>

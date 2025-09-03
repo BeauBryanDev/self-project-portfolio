@@ -27,6 +27,21 @@
             </h3>
 
             <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"class="mt-2 text-sm text-gray-600"><?= $link['description'] ?></p>
+
+            <div>
+                <form action="/projects/delete" method="POST" onsubmit="return confirm('Are You Sure you want to delete this posts?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="id" value="<?= $link['id'] ?>">
+
+                    <button type="submit" class="mt-2 text-xs font-semibold text-red-600 hover:text-red-800 cursor-pointer">
+                        Delete 
+                    </button>
+                    <a href="/projects/edit?id=<?= $link['id'] ?>" class="text-xs font-semibold text-gray-900 hover:text-gray-600">
+                        Edit &rarr;
+                    </a>
+                </form>
+                
+            </div>
         </article>
 
     <?php endforeach; ?>

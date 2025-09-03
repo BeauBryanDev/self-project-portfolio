@@ -54,6 +54,76 @@ class ProjectsController  {
         require __DIR__ . '/../../resources/create_project_template.php';
     }
 
+    public function edit() {
+
+        $title = 'Edit Project';
+
+        $db = new db();
+
+        $project = $db->query("SELECT * FROM links WHERE id = :id", [
+            'id' => $_GET['id'] ?? null
+        ])->firstOrFail();
+
+        if (!$project) {
+            header("Location: /projects");
+            exit;
+        }
+
+        require __DIR__ . '/../../resources/edit_project_template.php';
+
+    }
+
+    public function update() {
+
+        $validator = new validator($_POST, [
+
+            'title' => 'required|min:3|max:255',
+            'url' => 'required|url|min:5|max:255',
+            'description' => 'required|min:10|max:1000',
+            //'content' => 'required|min:10|max:2048',
+
+        ]);
+
+        $db = new db();
+
+        $project = $db->query("SELECT * FROM links WHERE id = :id", [
+            'id' => $_GET['id'] ?? null,
+        ])->firstOrFail();
+
+        if ($validator->wentThrough()) {
+
+            $db->query("UPDATE links SET title = :title ,  url = :url , description = :description WHERE id = :id", [
+                'id'          => $project['id'] ?? null,
+                'title'       => $_POST['title'] ?? null,
+                'url'        => $_POST['url'] ?? null,
+                'description' => $_POST['description'] ?? null,
+                // 'content' => $_POST['content'] ?? null,
+                
+            ]);
+
+            header("Location: /projects");
+            exit;
+
+        }
+        $errors = $validator->errors();
+        $title = 'Edit Project';
+
+        require __DIR__ . '/../../resources/edit_project_template.php';
+
+    }
+
+    public function destroy() {
+
+        $db = new db();
+
+        $db->query("DELETE FROM links WHERE id = :id", [
+            'id' => $_POST['id'] ?? null
+        ]);
+
+        header("Location: /projects");
+        exit;
+    }
+
 }
 
 

@@ -8,7 +8,6 @@ require_once __DIR__ . '/../app/Controllers/PostController.php';
 require_once __DIR__.'/../app/Controllers/ContactController.php';
 //require_once __DIR__.'/../app/Controllers/CreateProjectController.php';
 
-
 //routers  ...
 
 $router->get('/',               [HomeController::class, 'index']);
@@ -19,6 +18,12 @@ $router->get('/post',           [PostController::class, 'show']);
 $router->get('/contact',        [ContactController::class, 'index']);
 $router->get('/projects/create',[ProjectsController::class, 'create']);
 $router->post('/projects/store', [ProjectsController::class, 'store']);
+$router->delete('/projects/delete',   [ProjectsController::class, 'destroy']);
+$router->delete('/home/delete', [HomeController::class,'destroy']);
+$router->get('/projects/edit', [ProjectsController::class, 'edit']);
+$router->put( '/projects/update', [ProjectsController::class, 'update']);
+$router->get('/home/edit', [HomeController::class, 'edit']);
+$router->put( '/home/update', [HomeController::class, 'update']);
 
 
 // $userViews = [
