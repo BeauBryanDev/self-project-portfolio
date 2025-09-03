@@ -6,7 +6,7 @@
 </div>
 
 <div class="w-full max-w-xl mx-auto">
-    <form method="POST">
+    <form action="/projects/store" method="POST">
         <div class="mb-4">
             <label class="text-sm font-semibold text-gray-900 ">Title</label>
             <div class="mt-2">
@@ -51,7 +51,7 @@
     <?php if (!empty($errors)): ?>
     <ul class="mt-4 text-red-500">
         <?php foreach ($errors as $error): ?>
-        <li class="text-xs">&rarr; <?= $error ?></li>
+        <li class="text-xs"> <?= htmlspecialchars($error) ?></li>
         <?php endforeach; ?>
     </ul>
     <?php endif; ?>
