@@ -1,5 +1,9 @@
 <?php 
 
+namespace app\Controllers;
+use frmwrk\db;
+use frmwrk\validator;
+
 class HomeController {
 
     public function index() {
@@ -13,6 +17,14 @@ class HomeController {
         require __DIR__ . '/../../resources/home_templates.php';
 
     }
+    public function create()  {
+
+        $myTitle = "Create a new Project";
+
+        require __DIR__ . '/../../resources/create_project_template.php';
+
+    }
+
     
     public function edit() {
 
@@ -77,6 +89,19 @@ class HomeController {
         require __DIR__ . '/../../resources/edit_post_template.php';
 
     }
+
+    public function destroy() {
+
+        $db = new db();
+
+        $db->query("DELETE FROM itposts WHERE pid = :pid", [
+            'pid' => $_POST['id'] ?? null
+        ]);
+
+        header("Location: /");
+        exit;
+    }
+
 
 }
 //require __DIR__ . '/../../resources/home_templates.php';

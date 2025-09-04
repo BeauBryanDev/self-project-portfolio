@@ -1,5 +1,9 @@
 <?php
 
+namespace app\Controllers;
+use frmwrk\db;
+use frmwrk\validator;
+
 class ProjectsController  {
 
     public function index() {

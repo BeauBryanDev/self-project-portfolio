@@ -1,5 +1,13 @@
 <?php
 
+
+use App\Controllers\AboutMeController;
+use App\Controllers\BlogController;
+use App\Controllers\HomeController;
+use App\Controllers\ProjectsController;
+use App\Controllers\PostController;
+use App\Controllers\ContactController;
+
 require_once __DIR__. '/../app/Controllers/AboutMeController.php';
 require_once __DIR__.'/../app/Controllers/ProjectsController.php';
 require_once __DIR__.'/../app/Controllers/BlogController.php';
@@ -17,6 +25,7 @@ $router->get('/blog',           [BlogController::class, 'index']);
 $router->get('/post',           [PostController::class, 'show']);
 $router->get('/contact',        [ContactController::class, 'index']);
 $router->get('/projects/create',[ProjectsController::class, 'create']);
+$router->get('/posts/create', [ HomeController::class, 'create']);
 $router->post('/projects/store', [ProjectsController::class, 'store']);
 $router->delete('/projects/delete',   [ProjectsController::class, 'destroy']);
 $router->delete('/home/delete', [HomeController::class,'destroy']);

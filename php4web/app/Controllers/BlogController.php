@@ -1,5 +1,8 @@
 <?php 
 
+namespace app\Controllers;
+use frmwrk\db;
+
 class BlogController {
 
     public function index() {

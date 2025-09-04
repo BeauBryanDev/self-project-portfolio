@@ -46,6 +46,13 @@
 
         <?php endforeach; ?>
 
+        <div class="my-16">
+            <a href="/projects/create" class="text-sm font-semibold text-gray-900 hover:text-gray-600">
+                <strong>Register a New Project</strong>
+            </a>
+        </div>
+
+
     </div>
 
 

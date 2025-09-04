@@ -1,5 +1,7 @@
 <?php 
 
+namespace app\Controllers;
+
 class AboutMeController {
 
     public function index() {

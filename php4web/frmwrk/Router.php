@@ -1,5 +1,7 @@
 <?php
 
+namespace frmwrk;
+
 class Router {
 
     protected $routes = [];

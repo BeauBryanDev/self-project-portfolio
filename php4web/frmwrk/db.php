@@ -1,5 +1,8 @@
 <?php
 
+namespace frmwrk;
+use PDO;
+
 class db {
     private $pdoConnection;
     private $stmt;

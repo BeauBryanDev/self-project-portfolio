@@ -1,5 +1,9 @@
 <?php
 
+namespace app\Controllers;
+use frmwrk\db;
+use frmwrk\validator;
+
 $myTitle = "Create a new Project";
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST') {
