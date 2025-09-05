@@ -10,11 +10,11 @@ class HomeController {
 
         $myTitle = "home";
         $db = new db();
-
         $posts = $db->query( "SELECT * FROM itposts
-         ORDER BY date DESC LIMIT 6")->get();
+        ORDER BY date DESC LIMIT 6")->get();
+        view( "home" ,[ "title"=> $myTitle , "posts" => $posts]);
 
-        require __DIR__ . '/../../resources/home_templates.php';
+        //require __DIR__ . '/../../resources/home_templates.php';
 
     }
     public function create()  {

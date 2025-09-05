@@ -8,13 +8,17 @@ class db {
     private $stmt;
 
     public function __construct() {
-        $dns = "localhost";
-        $dbName = "project-store";
-        $dbUser = "dbkeeper";
-        $dbPass = "Set.Fire.tothe.Rain*528+";
-        $charset = "utf8mb4";
+        // $dns = "localhost";
+        // $dbName = "project-store";
+        // $dbUser = "dbkeeper";
+        // $dbPass = "Set.Fire.tothe.Rain*528+";
+        // $charset = "utf8mb4";
 
-        $this->pdoConnection = new PDO("mysql:host=$dns;dbname=$dbName;charset=$charset", $dbUser, $dbPass);
+        $dns = sprintf("mysql:host=%s;dbname=%s;charset=%s", 
+        config('host'), config('dbname'), config('charset')
+        );
+
+        $this->pdoConnection = new PDO($dns, config('user'), config('pass'));
         $this->pdoConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
