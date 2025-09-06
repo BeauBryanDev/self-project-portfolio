@@ -1,25 +1,24 @@
 <?php 
 
+use frmwrk\db as Database; 
+
 if ( !function_exists('root_path'))  {
     
-    function root_path() {
-        //return rtrim(str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__), '/');
-        return dirname( __DIR__) . '/' . normalize_path($_SERVER['DOCUMENT_ROOT'], true);
+    function root_path(string $path): string
+    {
+        // return __DIR__ . '/../';
+        return dirname(__DIR__) . '/' . normalize_path($path);
     }
 }
 
-if ( function_exists("root_path")) {
-
-    function normalize_path($path, $isDir = false) {
-        $normalizedPath = str_replace(['\\', '//'], '/', $path);
-        if ($isDir) {
-            $normalizedPath = rtrim($normalizedPath, '/') . '/';
-        }
-        return $normalizedPath;
+if (!function_exists('normalize_path')) {
+    function normalize_path(string $path): string
+    {
+        return trim($path, '/');
     }
 }
 
-if ( function_exists("root_path")) {
+if (!function_exists("view")) {
 
     function view($viewName, $data = []) {
         extract($data);
@@ -28,21 +27,21 @@ if ( function_exists("root_path")) {
     }
 }
 
-if ( function_exists("root_path")) {
+if (!function_exists("redirect")) {
 
     function redirect($path) {
-        header("Location: " . root_path() . $path);
+        header("Location: /" . normalize_path($path));
         exit;
     }
 }
 
-if ( function_exists("root_path")) {
+if (!function_exists("asset")) {
 
     function asset($assetPath) {
-        return root_path() . "/public/" . ltrim($assetPath, '/');
+        return root_path($assetPath) . "/public/" . ltrim($assetPath, '/');
     }
-}   
-if ( function_exists('root_path')) {
+}
+if (!function_exists('current_url')) {
 
     function current_url() {
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -75,4 +74,27 @@ if ( !function_exists('config')) {
         $config = include __DIR__ . '/../config/app.php';
         return $config[$key] ?? $default;
     }
+
 }   
+
+if (!function_exists('db')) {
+    function db(): Database
+    {
+        static $db = null;
+
+        if ($db === null) {
+            $db = new Database();
+        }
+
+        return $db;
+    }
+}
+
+
+if (!function_exists('isAuthenticated')) {
+    function isAuthenticated(): bool
+    {
+        return (bool) ($_SESSION['user'] ?? false);
+    }
+
+}

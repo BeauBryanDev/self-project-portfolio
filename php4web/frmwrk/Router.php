@@ -2,7 +2,11 @@
 
 namespace frmwrk;
 
+use frmwrk\Middleware\Middleware;
+
 class Router {
+
+    //require_once __DIR__ . '/helpers.php';
 
     protected $routes = [];
 
@@ -13,33 +17,33 @@ class Router {
     }
 
 
-    public function get( string $uri, array $action )   {
+    public function get( string $uri, array $action , string | null $middleware = null )   {
 
-        $this->routes['GET'][$uri] = $action;
-
-    }
-
-    public function post( string $uri, array $action )   {
-
-        $this->routes['POST'][$uri] = $action;
+        $this->routes['GET'][$uri] = [ 'action' => $action, 'middleware' => $middleware ];
 
     }
 
-    public function delete( string $uri, array $action )   {
+    public function post( string $uri, array $action , string | null $middleware = null )   {
 
-        $this->routes['DELETE'][$uri] = $action;
-
-    }
-
-    public function put( string $uri, array $action )   {
-
-        $this->routes['PUT'][$uri] = $action;
+        $this->routes['POST'][$uri] = [ 'action' => $action, 'middleware' => $middleware ];
 
     }
 
-    public function patch( string $uri, array $action )   {
+    public function delete( string $uri, array $action , string | null $middleware = null )   {
 
-        $this->routes['PATCH'][$uri] = $action;
+        $this->routes['DELETE'][$uri] = [ 'action' => $action, 'middleware' => $middleware ];
+
+    }
+
+    public function put( string $uri, array $action ,  string | null $middleware = null )   {
+
+        $this->routes['PUT'][$uri] = [ 'action' => $action, 'middleware' => $middleware ];
+
+    }
+
+    public function patch( string $uri, array $action ,  string | null $middleware = null )   {
+
+        $this->routes['PATCH'][$uri] = [ 'action' => $action, 'middleware' => $middleware ];
 
     }
 
@@ -52,7 +56,7 @@ class Router {
         $method =  $_POST['_method'] ?? $_SERVER['REQUEST_METHOD']; //FIT WORKS FOR GET, POST, PUT  AND DELETE SINCE NOW ON.
 
 
-        $action = $this->routes[$method][$requestURI] ?? null;
+        $action = $this->routes[$method][$requestURI]['action'] ?? null ;
 
 
         if ($action === null) {
@@ -62,6 +66,17 @@ class Router {
          } //else {
            //  require_once __DIR__ . '/../' . $route;
          //}
+
+        $middlewareClass = $this->routes[$method][$requestURI]['middleware'] ?? null;
+
+        if ( $middlewareClass === null ) {
+            // No middleware, proceed to controller action
+        } else { /*
+            $middleware = new $middlewareClass();
+            $middleware(); */
+            // Call the middleware Class in ./frmwrk/Middleware/
+            Middleware::run(new $middlewareClass());
+        }
 
         [$controller , $method ] = $action;
 
