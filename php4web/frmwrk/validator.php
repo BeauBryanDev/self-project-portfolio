@@ -46,8 +46,8 @@ class validator {
                 'max'      => strlen($value) > (int)$param ? "$field must be at most $param characters..." : null,
                 'url'      => !self::url($value) ? "$field must be a valid URL..." : null,
                 'date'     => !preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) ? "$field must be a valid date in YYYY-MM-DD format..." : null,
-
-                default    => null,
+                'email' =>  filter_var($value, FILTER_VALIDATE_EMAIL) === false ? "$field must be a valid email address..." : null,
+                default    => throw new \Exception("Validation rule $name not recognized."),
 
             };
 

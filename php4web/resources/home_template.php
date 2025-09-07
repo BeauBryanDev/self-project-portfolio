@@ -8,10 +8,10 @@
 
     <div class="border-b border-gray-200 pb-8 mb-8">
         
-        <h2 class="text-4xl font-semibold text-gray-900 sm:text-5xl">Mis posts recientes</h2>
+        <h2 class="text-4xl font-semibold text-gray-900 sm:text-5xl">My IT Posts</h2>
 
         <p class="text-lg text-gray-600 w-full max-w-4xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque suscipit qui necessitatibus officiis soluta voluptatum numquam a aperiam quasi nemo quas ullam eaque, optio modi nam ut odit dolore. Impedit.
+            These are some of mhy few IT related Posts about GNU/Linux, Programming and Web Development.
         </p>
     </div>
 
@@ -31,6 +31,7 @@
                     <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="mt-2 text-sm text-gray-600"><?= $post['content'] ?></p>
                 </div>
                 <div>
+                <?php if ( isAuthenticated()): ?>
                 <form action="/home/delete" method="POST" onsubmit="return confirm('Are You Sure you want to delete this posts?');">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="id" value="<?= $post['pid'] ?>">
@@ -42,17 +43,18 @@
                         Edit &rarr;
                     </a>
                 </form>
+                <?php endif; ?>
             </div>
             </article>
 
         <?php endforeach; ?>
-
+        <?php if ( isAuthenticated()): ?>
         <div class="my-16">
             <a href="/projects/create" class="text-sm font-semibold text-gray-900 hover:text-gray-600">
                 <strong>Register a New Project</strong>
             </a>
         </div>
-
+        <?php endif; ?>
 
     </div>
 

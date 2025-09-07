@@ -38,6 +38,11 @@ class db {
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function first() {
+        return $this->stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     public function firstOrFail() {
         $result = $this->stmt->fetch(PDO::FETCH_ASSOC);
         if (!$result) {

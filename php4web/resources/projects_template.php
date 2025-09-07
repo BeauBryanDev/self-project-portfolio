@@ -8,10 +8,10 @@
     <h2>this is my Projects Page</h2>
 
     <div class="border-b border-gray-200 pb-8 mb-8">
-    <h2 class="text-4xl font-semibold text-gray-900 sm:text-5xl">Mis proyectos recientes</h2>
+    <h2 class="text-4xl font-semibold text-gray-900 sm:text-5xl">Recent Projects</h2>
 
     <p class="text-2xl text-gray-600 w-full max-w-4xl">
-       Titulos Proyectos Personales
+       SSome of my few IT related Projects about GNU/Linux, Programming and Web Development.
     </p>
 </div>
 
@@ -28,6 +28,7 @@
 
             <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"class="mt-2 text-sm text-gray-600"><?= $link['description'] ?></p>
 
+            <?php if ( isAuthenticated()): ?>
             <div>
                 <form action="/projects/delete" method="POST" onsubmit="return confirm('Are You Sure you want to delete this posts?');">
                     <input type="hidden" name="_method" value="DELETE">
@@ -42,15 +43,19 @@
                 </form>
                 
             </div>
+            <?php endif; ?>
+            <!-- endif -->
         </article>
 
     <?php endforeach; ?>
 
 </div>
+<?php if ( isAuthenticated()): ?>
 <div class="my-16">
     <a href="/projects/create" class="text-sm font-semibold text-gray-900 hover:text-gray-600">
         <strong>Register a New Project</strong>
     </a>
 </div>
+<?php endif; ?>
 
 <?php require __DIR__ . '/views/footer.php'; ?>

@@ -28,6 +28,8 @@ $router->get('/blog',           [BlogController::class, 'index']);
 $router->get('/post',           [PostController::class, 'show']);
 $router->get('/contact',        [ContactController::class, 'index']);
 $router->get( '/login',   [AuthController::class, 'login']);
+$router->post('/login',  [ AuthController::class, 'authenticate' ]);
+$router->post('/logout', [ AuthController::class, 'logout'], Authenticated::class );
 
 $router->get('/projects/create',[ProjectsController::class, 'create'],  Authenticated::class);
 $router->get('/posts/create', [ HomeController::class, 'create'], Authenticated::class);
