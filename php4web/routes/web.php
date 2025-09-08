@@ -9,6 +9,7 @@ use App\Controllers\PostController;
 use App\Controllers\ContactController;
 use App\Controllers\AuthController;
 use frmwrk\Middleware\Authenticated;
+use frmwrk\Middleware\Guest;
 
 require_once __DIR__. '/../app/Controllers/AboutMeController.php';
 require_once __DIR__.'/../app/Controllers/ProjectsController.php';
@@ -27,8 +28,8 @@ $router->get('/projects',       [ProjectsController::class, 'index']);
 $router->get('/blog',           [BlogController::class, 'index']);
 $router->get('/post',           [PostController::class, 'show']);
 $router->get('/contact',        [ContactController::class, 'index']);
-$router->get( '/login',   [AuthController::class, 'login']);
-$router->post('/login',  [ AuthController::class, 'authenticate' ]);
+$router->get( '/login',   [AuthController::class, 'login'], Guest::class);
+$router->post('/login',  [ AuthController::class, 'authenticate' ], Guest::class);
 $router->post('/logout', [ AuthController::class, 'logout'], Authenticated::class );
 
 $router->get('/projects/create',[ProjectsController::class, 'create'],  Authenticated::class);

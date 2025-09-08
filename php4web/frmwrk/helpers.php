@@ -1,6 +1,7 @@
 <?php 
 
 use frmwrk\db as Database; 
+use \frmwrk\SessionMngr as SessionMngr;
 
 if ( !function_exists('root_path'))  {
     
@@ -54,7 +55,15 @@ if (!function_exists('current_url')) {
 if ( ! function_exists('old')) {
 
     function old($field, $default = '') {
-        return $_POST[$field] ?? $default;
+        static $session = null;
+
+        if ($session === null) {
+            $session = new SessionMngr();
+        }
+        
+        $oldData = $session->getFlash('old');
+
+        return $oldData[$field] ?? $default;
     }
 }
 
@@ -103,8 +112,58 @@ if (!function_exists('back')) {
 
     function back()  {
 
-        $prevoousURL = $_SERVER['HTTP_REFERER'] ?? '/';
-        header("Location: " . $prevoousURL);
+        $previousURL = $_SERVER['HTTP_REFERER'] ?? '/';
+        header("Location: " . $previousURL);
         exit;
     }
+}
+
+if (!function_exists('session') )  {
+
+    function session () : SessionMngr {
+
+        static $session = null ;
+
+        if ( $session === null ) {
+
+            $session = new SessionMngr();
+        }
+
+        return $session;
+        
+    }
+
+}
+
+if (!function_exists('erros')) {
+
+    function showErrors() : string {
+
+        $erros = session()->getFlash('errors', []) ?? [];
+
+        if ( empty($erros) ) {
+            return '';
+        }
+
+
+        if (!is_array($erros) )  {
+
+            $erros = [ $erros];
+        }
+
+
+        $htmlerrors = '<ul class="mt-4 text-red-500">';
+
+      foreach ($erros as $error ) {
+
+        $htmlerrors .= "<li class='text-xs'>* {$error}</li>";
+
+    }
+
+    $htmlerrors .= '</uñ>';
+
+    return $htmlerrors;
+
+    }
+
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace frmwrk;
+use frmwrk\SessionMngr;
 class validator {
 
     protected $errors = [];
@@ -13,10 +14,14 @@ class validator {
         $this->validate();
 
         if ( $autoRedirection && !$this->wentThrough() ) {
-           
+        
             
             $this->redirectIfFailed();
         }
+    }
+
+    public static function make ( array $data, array $rules, bool $autoRedirection = true ) : static {
+        return new static($data, $rules, $autoRedirection);
     }
 
     public static function url($url) {
@@ -76,20 +81,17 @@ class validator {
         return $this->errors;
     }
 
-    public function validateRequired(string $field, mixed $value): void {
-        if (empty($value)) {
-            $this->errors[$field][] = 'This field is required.';
-        }
-    }
-
     protected function redirectIfFailed(): void {
 
-        // $previousURL = $_SERVER['HTTP_REFERER'] ?? '/';
-        // $redirectTo = $previousURL;
-        // header("Location: " . $redirectTo);
-        // exit;
-        back();
-    }
+        $session = new SessionMngr();
+        $session->setFlash("errors", $this->errors);
+        $session->setFlash("old", $this->data);
 
+
+        foreach ( $this->data as $field => $value ) {
+            $session->setFlash($field, $value);
+        back();
+        }
+    }
 
 }

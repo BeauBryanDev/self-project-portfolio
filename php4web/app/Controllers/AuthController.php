@@ -25,26 +25,22 @@ class AuthController {
             view('login', ['errors' => $errors]);
             return;
         }
-        $db = new db();
-        if ( $validator->wentThrough()) {
+     
+        $login = ( new Authenticate())->login(
+            $_POST['email'], $_POST['password']
+        );
 
+        if (!$login) {
+            
+            session()->getFlash('errors', '');
+            session()->setFlash('errors', 'invalid email or password');
 
-            $login = ( new Authenticate())->login(
-                $_POST['email'], $_POST['password']
-            );
+            back();
+        } 
+        
 
-            if ($login) {
-                // Authentication successful
-                redirect('/');
-            } else {
-                // Authentication failed
-                view('login', ['error' => $validator->errors()]);
-                return;
-            }
-
-            redirect('/login');
-        }
-       
+        redirect('/login');
+      
     } public function logout() {
         // Logic for logging out the user
         (new Authenticate())->logout();

@@ -15,7 +15,6 @@ $router = new Router();
 //$routes =  require __DIR__ . '/../routes/web.php';
 $router->run();
 
-
 // if ($route === null) {
 
 //     http_response_code(404);

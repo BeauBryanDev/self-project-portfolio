@@ -28,7 +28,7 @@ class ProjectsController  {
 
         $myTitle = "Create a new Project";
         
-        $validator = new validator($_POST, [
+       validator::make($_POST, [
 
             'title' => 'required|min:3|max:255',
             'url' => 'required|url|min:5|max:255',
@@ -37,25 +37,23 @@ class ProjectsController  {
             
         ]);
 
-        if ($validator->wentThrough( ) )  {
-            $db = new db();
+        
+        $db = new db();
 
-            $db->query("INSERT INTO itposts (title, description, content, date, url ) VALUES (:title, :description, :content, :date, :url)", [
-                'title' => $_POST['title'],
-                'description' => $_POST['description'],
-                'content' => $_POST['content'],
-                'url' => $_POST['url'],
-                'date' => date('Y-m-d')
-            ]);
-            header("Location: /projects");
-            exit;
-        }
+        $db->query("INSERT INTO itposts (title, description, content, date, url ) VALUES (:title, :description, :content, :date, :url)", [
+            'title' => $_POST['title'],
+            'description' => $_POST['description'],
+            'content' => $_POST['content'],
+            'url' => $_POST['url'],
+            'date' => date('Y-m-d')
+        ]);
+        header("Location: /projects");
+        exit;
+        
 
-        $errors = $validator->errors();
-
-        $title = 'Register a project';
-
-        require __DIR__ . '/../../resources/create_project_template.php';
+        //$errors = $validator->errors();
+        // $title = 'Register a project';
+        // require __DIR__ . '/../../resources/create_project_template.php';
     }
 
     public function edit() {
@@ -79,7 +77,7 @@ class ProjectsController  {
 
     public function update() {
 
-        $validator = new validator($_POST, [
+        validator::make($_POST, [
 
             'title' => 'required|min:3|max:255',
             'url' => 'required|url|min:5|max:255',
@@ -94,25 +92,24 @@ class ProjectsController  {
             'id' => $_GET['id'] ?? null,
         ])->firstOrFail();
 
-        if ($validator->wentThrough()) {
+        
 
-            $db->query("UPDATE links SET title = :title ,  url = :url , description = :description WHERE id = :id", [
-                'id'          => $project['id'] ?? null,
-                'title'       => $_POST['title'] ?? null,
-                'url'        => $_POST['url'] ?? null,
-                'description' => $_POST['description'] ?? null,
-                // 'content' => $_POST['content'] ?? null,
-                
-            ]);
+        $db->query("UPDATE links SET title = :title ,  url = :url , description = :description WHERE id = :id", [
+            'id'          => $project['id'] ?? null,
+            'title'       => $_POST['title'] ?? null,
+            'url'        => $_POST['url'] ?? null,
+            'description' => $_POST['description'] ?? null,
+            // 'content' => $_POST['content'] ?? null,
+            
+        ]);
 
-            header("Location: /projects");
-            exit;
+        header("Location: /projects");
+        exit;
 
-        }
-        $errors = $validator->errors();
-        $title = 'Edit Project';
-
-        require __DIR__ . '/../../resources/edit_project_template.php';
+        
+        // $errors = $validator->errors();
+        // $title = 'Edit Project';
+        // require __DIR__ . '/../../resources/edit_project_template.php';
 
     }
 

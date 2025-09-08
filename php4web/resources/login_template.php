@@ -35,14 +35,7 @@
         </div>
     </form>
 
-    <?php if (!empty($errors)): ?>
-        <ul class="mt-4 text-red-500">
-            <?php foreach ($errors as $error): ?>
-            <li class="text-xs"> <?= htmlspecialchars($error) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
-    <!-- endif -->
+    <?= showErrors() ?>
 </div>
 
 <?php require __DIR__ . '/views/footer.php'; ?>
