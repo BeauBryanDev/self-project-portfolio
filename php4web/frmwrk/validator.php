@@ -8,8 +8,15 @@ class validator {
     public function __construct(
         protected array $data,
         protected array $rules = [],
+        protected bool $autoRedirection = true,
     ) {
         $this->validate();
+
+        if ( $autoRedirection && !$this->wentThrough() ) {
+           
+            
+            $this->redirectIfFailed();
+        }
     }
 
     public static function url($url) {
@@ -73,6 +80,15 @@ class validator {
         if (empty($value)) {
             $this->errors[$field][] = 'This field is required.';
         }
+    }
+
+    protected function redirectIfFailed(): void {
+
+        // $previousURL = $_SERVER['HTTP_REFERER'] ?? '/';
+        // $redirectTo = $previousURL;
+        // header("Location: " . $redirectTo);
+        // exit;
+        back();
     }
 
 

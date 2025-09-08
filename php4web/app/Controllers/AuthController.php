@@ -1,6 +1,7 @@
 <?php 
 
 namespace app\Controllers;
+use frmwrk\Authenticate;
 use frmwrk\db;
 use frmwrk\validator;
 
@@ -27,33 +28,28 @@ class AuthController {
         $db = new db();
         if ( $validator->wentThrough()) {
 
-            $user = $db->query("SELECT * FROM users WHERE email = :email", [
-                'email' => $_POST['email']
-            ])->first();
 
-            if ($user && password_verify($_POST['password'], $user['password'])) {
-                // If authentication is successful, set user session and redirect
-                $_SESSION['user'] = [
-                    'uid' => $user['uid'],
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'password' => $user['password'],
-                ];
+            $login = ( new Authenticate())->login(
+                $_POST['email'], $_POST['password']
+            );
+
+            if ($login) {
+                // Authentication successful
                 redirect('/');
             } else {
                 // Authentication failed
                 view('login', ['error' => $validator->errors()]);
                 return;
             }
+
+            redirect('/login');
         }
        
-    }
-
-    public function logout() {
+    } public function logout() {
         // Logic for logging out the user
-        unset($_SESSION['user']);
-        session_destroy();
+        (new Authenticate())->logout();
         redirect('/login');
     }
+
 }
 

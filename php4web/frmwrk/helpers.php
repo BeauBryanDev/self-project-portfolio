@@ -98,3 +98,13 @@ if (!function_exists('isAuthenticated')) {
     }
 
 }
+
+if (!function_exists('back')) {
+
+    function back()  {
+
+        $prevoousURL = $_SERVER['HTTP_REFERER'] ?? '/';
+        header("Location: " . $prevoousURL);
+        exit;
+    }
+}
